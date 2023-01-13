@@ -1,0 +1,54 @@
+
+- NASM Map file ---------------------------------------------------------------
+
+Source file:  ./Source/Boot/mbr.asm
+Output file:  ./Binaries/mbr.bin
+
+-- Program origin -------------------------------------------------------------
+
+00000600
+
+-- Sections (summary) ---------------------------------------------------------
+
+Vstart            Start             Stop              Length    Class     Name
+             600               600               800  00000200  progbits  .text
+
+-- Sections (detailed) --------------------------------------------------------
+
+---- Section .text ------------------------------------------------------------
+
+class:     progbits
+length:                 200
+start:                  600
+align:     not defined
+follows:   not defined
+vstart:                 600
+valign:    not defined
+vfollows:  not defined
+
+-- Symbols --------------------------------------------------------------------
+
+---- Section .text ------------------------------------------------------------
+
+Real              Virtual           Name
+             600               600  ep
+             61D               61D  main
+             623               623  main.lp
+             632               632  badExit
+             63B               63B  activeFound
+             64E               64E  activeFound.tryAgain
+             650               650  activeFound.tryAgainLp
+             683               683  activeFound.badRead
+             688               688  activeFound.readOk
+             69B               69B  activeFound.okOS
+             6A2               6A2  print
+             6AF               6AF  print.exit
+             6B0               6B0  msg1
+             6C9               6C9  msg2
+             6E8               6E8  msg3
+             7BE               7BE  tbl1
+             7CE               7CE  tbl2
+             7DE               7DE  tbl3
+             7EE               7EE  tbl4
+             800               800  pktptr
+

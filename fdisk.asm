@@ -18,22 +18,22 @@
 ;We then round to the nearest cylinder (multiple of 64 sectors), 
 ; rounding up (if 0) or down (if past max sector).
 
-[map all ./Utils/FDISK/Listings/fdisk.map]
+[map all ./Listings/fdisk.map]
 [DEFAULT REL]
 BITS 64
-%include "./Source/Include/dosMacro.mac"
-%include "./Source/Include/dosStruc.inc"
-%include "./Source/Include/fatStruc.inc"
-%include "./Source/Include/dosError.inc"
+%include "./Include/dosMacro.mac"
+%include "./Include/dosStruc.inc"
+%include "./Include/fatStruc.inc"
+%include "./Include/dosError.inc"
 
 ;Hard disks must have 512 byte sectors
 fddSectorSize   equ 200h
 
-%include "./Utils/FDISK/Source/fdskMain.asm"
-%include "./Utils/FDISK/Source/fdskUtil.asm"
-%include "./Utils/FDISK/Source/fdskExt.asm"
-%include "./Utils/FDISK/Data/fdskData.asm"
-%include "./Utils/FDISK/Data/fdskMsg.asm"
+%include "./Source/fdskMain.asm"
+%include "./Source/fdskUtil.asm"
+%include "./Source/fdskExt.asm"
+%include "./Data/fdskData.asm"
+%include "./Data/fdskMsg.asm"
 
 ;Place the partial VBR here.
 ;All uninitialised values are set to 0
