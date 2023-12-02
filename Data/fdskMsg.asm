@@ -5,7 +5,7 @@ crlf    db LF,CR,"$"
 multiMsg:   
     db "Please stop all other programs and/or any networking software",
     db " before proceeding.",LF,CR
-    db "Press Enter to continue once this is done or ESC to return to",
+    db "Strike Enter to continue once this is done or ESC to return to",
     db "DOS",LF,CR,"$"
 strtMsg:
     db CR,LF
@@ -19,13 +19,13 @@ exitMsg:
     db CR,LF,LF
     db "System will now restart",LF,CR
     db "Insert bootable DOS medium in drive A:",LF,CR
-    db "Press any key when ready...",LF,CR,"$"
+    db "Strike any key when ready...",LF,CR,"$"
 
 prompt: db "Fixed Disk "
 drvNum  db "1] $"
 
 exitOptionMsg:
-    db "Press X to exit",LF,CR,"$"
+    db "Strike X to exit",LF,CR,"$"
 
 selectValidOption:
     db CR,LF,LF,LF,
@@ -48,14 +48,17 @@ mpOptionalMsg:
 createPageBadMsg:
     db "Primary DOS partition already exists",LF,CR,"$"
 createPageMsg:
-    db "Create DOS Partition",LF,LF,CR
+    db "Create DOS Partition",LF,CR,"$"
+createPageMsgPrompt:
+    db CR,LF,
     db "Do you wish to use the entire fixed disk for DOS? Y/N: $"
 createPage2Msg:
+    db CR,LF,
     db "Specify how much of the fixed disk you wish to use (1%-99%) or"
     db CR,LF,
-    db "Press X to return to FDISK options",CR,LF,"$"
+    db "strike X to return to FDISK options",CR,LF,"$"
 createPromptMsg: 
-    db "Type a number between 1 and 99] $"
+    db CR,LF,"Type a number between 1 and 99] $"
 createDoneMsg:
     db CR,LF,LF,"Primary partition created", CR,LF,"$"
 createForeignBad:

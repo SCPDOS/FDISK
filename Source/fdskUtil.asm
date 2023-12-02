@@ -110,12 +110,12 @@ getYNresponse:
 ;Return: ZF = ZE => Y
 ;        ZF = NZ => N
     push rdx    ;Save the input string ptr
-.ep:
     call print
     mov bl, 2
     call takeInput
+    call printcrlf  ;New line as an indication of acceptance of input
     cmp byte [charsTyped], 1
-    jne .ep
+    jne .badChoice
     movzx eax, byte [inputString]
     cmp al, "y"
     je .yResponse
@@ -125,6 +125,7 @@ getYNresponse:
     je .nResponse
     cmp al, "N"
     je .nResponse
+.badChoice:
     pop rdx
     jmp short getYNresponse
 .yResponse:

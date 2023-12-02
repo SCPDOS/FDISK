@@ -154,6 +154,8 @@ createPtnMain:
 ;Here we lay down a fresh MBR.
 ;Prompt the user for their ptn size
     lea rdx, createPageMsg
+    call print
+    lea rdx, createPageMsgPrompt
     call getYNresponse  ;ZF=ZE => Y response, ZF=NZ => N response
     ;If the user responds Y, then we allocate the whole disk
     jnz .partialAllocation
