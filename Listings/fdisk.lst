@@ -4,7 +4,7 @@
      4                                  ;Restarts the machine upon completion by triple faulting.
      5                                  
      6                                  ;Steps taken:
-     7                                  ;0) Call Int 4Ah/EAX=0h. If it returns ah <> 0, then tell the user to
+     7                                  ;0) Call Int 2Ah/EAX=0h. If it returns ah <> 0, then tell the user to
      8                                  ;    stop any other tasks and networking software before continuing.
      9                                  ;    Give them a "Press Enter to continue or ESC to return to DOS" prompt.
     10                                  ;1) Queries the BIOS implementation (in this case SCP/BIOS) for the number
@@ -267,7 +267,7 @@
    160                              <1> noInherit       equ 80h
    161                              <1> ;Bits 8-12 reserved 0
    162                              <1> 
-   163                              <1> diskFullFail    equ 2000h   ;DO NOT USE. IF set, Trigger Int 44h on disk full.
+   163                              <1> diskFullFail    equ 2000h   ;DO NOT USE. IF set, Trigger Int 24h on disk full.
    164                              <1> ;Buffering on writes
    165                              <1> noBufferWrites  equ 4000h   ;If set, dont buffer writes, always update disk
    166                              <1> ;FCB opened file, shouldn't see this as we are depreciating FCB's completely now
@@ -285,7 +285,7 @@
    178                              <1> charDevConOut   equ 2h  ;If set, device is CON output
    179                              <1> charDevNulDev   equ 4h  ;If set, device is NULL device
    180                              <1> charDevClockDev equ 8h  ;If set, device is CLOCK device
-   181                              <1> charDevFastOut  equ 10h ;If set, device supports INT 49h
+   181                              <1> charDevFastOut  equ 10h ;If set, device supports Int 29h
    182                              <1> charDevBinary   equ 20h ;If set, r/w char device in Binary mode!!!
    183                              <1> charDevNoEOF    equ 40h ;If set, no EOF when reading from device!!
    184                              <1> blokFileNoFlush equ 40h ;Set if file has not yet been accessed (sol no flush!)
@@ -357,7 +357,7 @@
    250                              <1> ;Owner = Non-para aligned address => Error? Should maybe lock up system?
    251                              <1> ;blockSize counts the number of paragraphs FROM .program TO THE NEXT MCB!
    252                              <1> ;------------------------------------------------------------------------;
-   253                              <1> ; For Int 41h, the callers registers are saved on their stack in the 
+   253                              <1> ; For Int 21h, the callers registers are saved on their stack in the 
    254                              <1> ; following order, thus allowing for return values to be placed in the 
    255                              <1> ; registers by accessing the caller register stack frame.
    256                              <1> ;------------------------------------------------------------------------;
@@ -432,14 +432,14 @@
    325 00000000 ????                <1>     .return     resb 2  ;Should always be CDh 40h, same place as DOS
    326 00000002 ????????            <1>     .allocSize  resd 1  ;Number of paras in init alloc or when exiting as TSR.
    327 00000006 ????????            <1>                 resd 1  ;Reserved 4 bytes
-   328 0000000A ????????????????    <1>     .oldInt42h  resq 1  ;Int 42h pointer on overlay load
-   329 00000012 ????????????????    <1>     .oldInt43h  resq 1  ;Int 43h pointer on overlay load
-   330 0000001A ????????????????    <1>     .oldInt44h  resq 1  ;Int 44h pointer on overlay load
+   328 0000000A ????????????????    <1>     .oldInt22h  resq 1  ;Int 22h pointer on overlay load
+   329 00000012 ????????????????    <1>     .oldInt23h  resq 1  ;Int 23h pointer on overlay load
+   330 0000001A ????????????????    <1>     .oldInt24h  resq 1  ;Int 24h pointer on overlay load
    331 00000022 ????????????????    <1>     .parentPtr  resq 1  ;Pointer to parent process PSP
    332                              <1>     .externalJFTPtr:    ;Ptr to external JFT array (first byte AFTER MCB)
    333 0000002A <res 14h>           <1>     .jobFileTbl resb 20 ;Main File handle array, JFT
    334 0000003E ????????????????    <1>     .envPtr     resq 1  ;Pointer to the environment
-   335 00000046 ????????????????    <1>     .rspPtr     resq 1  ;Pointer to rsp on entry to Int 41h
+   335 00000046 ????????????????    <1>     .rspPtr     resq 1  ;Pointer to rsp on entry to Int 21h
    336 0000004E ????                <1>     .jftSize    resw 1  ;JFT array size, 20 => PSP JFT in use
    337 00000050 ??????              <1>     .unixEntry  resb 3  ;Must always be CDh 41h CBh, same place as DOS
    338 00000053 ????????????????    <1>     .prevPSP    resq 1  ;Pointer to the previous PSP in chain (used by SHARE)
@@ -805,7 +805,7 @@
     47                              <1> 
     48                              <1> errFilExist equ 80  ;File already exists
     49                              <1> errDirExist equ 82  ;Directory already exists
-    50                              <1> errFI44     equ 83  ;Fail on INT 44h
+    50                              <1> errFI44     equ 83  ;Fail on Int 24h
     51                              <1> errRedir    equ 84  ;Too many levels of redirection
     52                              <1> errDupRedir equ 85  ;Trying to redirect a redirection
     53                              <1> errBadPass  equ 86  ;Bad password
@@ -854,15 +854,15 @@
      5                              <1> .cVersion:
      6 00000003 FC                  <1>     cld
      7 00000004 31C0                <1>     xor eax, eax
-     8 00000006 CD4A                <1>     int 4Ah
+     8 00000006 CD2A                <1>     int 2Ah
      9 00000008 85C0                <1>     test eax, eax
     10 0000000A 7422                <1>     jz notMultitasking
     11 0000000C 488D15BE0C0000      <1>     lea rdx, multiMsg
     12 00000013 B800090000          <1>     mov eax, 0900h
-    13 00000018 CD41                <1>     int 41h
+    13 00000018 CD21                <1>     int 21h
     14                              <1> .inLoop:
     15 0000001A B800080000          <1>     mov eax, 0800h  ;Console input no echo
-    16 0000001F CD41                <1>     int 41h
+    16 0000001F CD21                <1>     int 21h
     17 00000021 3C0D                <1>     cmp al, CR
     18 00000023 7409                <1>     je notMultitasking
     19 00000025 3C1B                <1>     cmp al, ESC 
@@ -871,7 +871,7 @@
     22                              <1> notMultitasking:
     23                              <1> ;Check Version Number
     24 0000002E B430                <1>     mov ah, 30h
-    25 00000030 CD41                <1>     int 41h
+    25 00000030 CD21                <1>     int 21h
     26 00000032 3A05CAFFFFFF        <1>     cmp al, byte [startFdisk.vNum] ;Version 1
     27 00000038 760C                <1>     jbe .okVersion
     28 0000003A 488D15BB130000      <1>     lea rdx, badVerStr
@@ -885,8 +885,8 @@
     36                              <1> .nonZeroDisks:
     37                              <1> ;Set CtrlC hook
     38 00000060 488D1546060000      <1>     lea rdx, exit.ctrlCHandler
-    39 00000067 B843250000          <1>     mov eax, 2543h
-    40 0000006C CD41                <1>     int 41h
+    39 00000067 B823250000          <1>     mov eax, 2523h
+    40 0000006C CD21                <1>     int 21h
     41                              <1> ;Print Start message
     42 0000006E 488D15F20C0000      <1>     lea rdx, strtMsg
     43 00000075 E87A080000          <1>     call print
@@ -896,7 +896,7 @@
     47                              <1>     ;Allocate 512 bytes now
     48 0000008B B800480000          <1>     mov eax, 4800h
     49 00000090 BB20000000          <1>     mov ebx, fddSectorSize >> 4 
-    50 00000095 CD41                <1>     int 41h
+    50 00000095 CD21                <1>     int 21h
     51 00000097 0F8232060000        <1>     jc badMemoryExit
     52 0000009D 4889051A0C0000      <1>     mov qword [xferBuffer], rax
     53                              <1> 
@@ -1374,22 +1374,22 @@
    497                              <1> 
    498                              <1> exit:
    499                              <1> ;In this case exit is done by ways of triple fault
-   500                              <1> ;To do this, we hook int43h to prevent the user from stopping this 
+   500                              <1> ;To do this, we hook int23h to prevent the user from stopping this 
    501                              <1> ; process and to link it directly to this the triple fault
    502 0000065E F6053C060000FF      <1>     test byte [reboot], -1
    503 00000665 750C                <1>     jnz .reboot
    504 00000667 E88C000000          <1>     call freeResources
    505 0000066C B8004C0000          <1>     mov eax, 4C00h
-   506 00000671 CD41                <1>     int 41h
+   506 00000671 CD21                <1>     int 21h
    507                              <1> .reboot:
    508 00000673 488D157A070000      <1>     lea rdx, exitMsg
    509 0000067A B800090000          <1>     mov eax, 0900h
-   510 0000067F CD41                <1>     int 41h
+   510 0000067F CD21                <1>     int 21h
    511 00000681 488D150E000000      <1>     lea rdx, .badInstruction
-   512 00000688 B843250000          <1>     mov eax, 2543h
-   513 0000068D CD41                <1>     int 41h
+   512 00000688 B823250000          <1>     mov eax, 2523h
+   513 0000068D CD21                <1>     int 21h
    514 0000068F B800080000          <1>     mov eax, 0800h  ;Input no echo
-   515 00000694 CD41                <1>     int 41h
+   515 00000694 CD21                <1>     int 21h
    516                              <1> .badInstruction:
    517 00000696 0F011D06000000      <1>     lidt [.resetIDT] ;Triple fault the machine
    518 0000069D EB00                <1>     jmp short .toHell
@@ -1420,14 +1420,14 @@
    543 000006D8 488D15C30D0000      <1>     lea rdx, badSectorMsg
    544                              <1> badPrint:
    545 000006DF B409                <1>     mov ah, 09h
-   546 000006E1 CD41                <1>     int 41h
+   546 000006E1 CD21                <1>     int 21h
    547                              <1> badExit:
    548                              <1> ;If we need to reboot, reboot even after an error.
    549 000006E3 F605B7050000FF      <1>     test byte [reboot], -1
    550 000006EA 7587                <1>     jnz exit.reboot
    551 000006EC E807000000          <1>     call freeResources
    552 000006F1 B8FF4C0000          <1>     mov eax, 4CFFh  ;Exit bad
-   553 000006F6 CD41                <1>     int 41h
+   553 000006F6 CD21                <1>     int 21h
    554                              <1> 
    555                              <1> freeResources:
    556                              <1> ;Any memory taken from DOS, free it here
@@ -1461,7 +1461,7 @@
    560 00000707 4150                <1>     push r8
    561 00000709 4C8B05AE050000      <1>     mov r8, qword [xferBuffer]
    562 00000710 B800490000          <1>     mov eax, 4900h
-   563 00000715 CD41                <1>     int 41h
+   563 00000715 CD21                <1>     int 21h
    564 00000717 4158                <1>     pop r8
    565 00000719 58                  <1>     pop rax
    566                              <1>     return
@@ -1750,7 +1750,7 @@
    214 000008CA 488D15E8030000      <1>     lea rdx, cmdLine
    215 000008D1 881A                <1>     mov byte [rdx], bl   ;Read 1 char (plus CR)
    216 000008D3 B80A0C0000          <1>     mov eax, 0C0Ah  ;Flush Input buffer and do Buffered Input
-   217 000008D8 CD41                <1>     int 41h
+   217 000008D8 CD21                <1>     int 21h
    218                              <1>     return
     13                              <2> %%_ret:
     14 000008DA C3                  <2>  ret
@@ -1768,7 +1768,7 @@
    229 000008ED 488D15DA030000      <1>     lea rdx, crlf
    230                              <1> print:
    231 000008F4 B800090000          <1>     mov eax, 0900h
-   232 000008F9 CD41                <1>     int 41h
+   232 000008F9 CD21                <1>     int 21h
    233                              <1>     return
     13                              <2> %%_ret:
     14 000008FB C3                  <2>  ret
@@ -1784,13 +1784,13 @@
    242                              <1> 
    243                              <1> printVersion:
    244 00000918 B430                <1>     mov ah, 30h ;Get version numbers, al = Major, ah = Minor
-   245 0000091A CD41                <1>     int 41h
+   245 0000091A CD21                <1>     int 21h
    246 0000091C 50                  <1>     push rax
    247 0000091D 0FB6C0              <1>     movzx eax, al
    248 00000920 E881010000          <1>     call printDecimalWordAtCursor
    249 00000925 B22E                <1>     mov dl, "."
    250 00000927 B402                <1>     mov ah, 02h
-   251 00000929 CD41                <1>     int 41h
+   251 00000929 CD21                <1>     int 21h
    252 0000092B 58                  <1>     pop rax
    253 0000092C 0FB6C4              <1>     movzx eax, ah
    254 0000092F E872010000          <1>     call printDecimalWordAtCursor
@@ -1987,7 +1987,7 @@
    435 00000B0A 48C1E908            <1>     shr rcx, 8    ;Get next digit down
    436                              <1> .dpfb21:
    437 00000B0E B402                <1>     mov ah, 02h
-   438 00000B10 CD41                <1>     int 41h
+   438 00000B10 CD21                <1>     int 21h
    439 00000B12 FFCD                <1>     dec ebp
    440 00000B14 75E2                <1>     jnz .dpfb2
    441                              <1>     return

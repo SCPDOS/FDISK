@@ -4,7 +4,7 @@
 ;Restarts the machine upon completion by triple faulting.
 
 ;Steps taken:
-;0) Call Int 4Ah/EAX=0h. If it returns ah <> 0, then tell the user to
+;0) Call Int 2Ah/EAX=0h. If it returns ah <> 0, then tell the user to
 ;    stop any other tasks and networking software before continuing.
 ;    Give them a "Press Enter to continue or ESC to return to DOS" prompt.
 ;1) Queries the BIOS implementation (in this case SCP/BIOS) for the number

@@ -214,7 +214,7 @@ takeInput:
     lea rdx, cmdLine
     mov byte [rdx], bl   ;Read 1 char (plus CR)
     mov eax, 0C0Ah  ;Flush Input buffer and do Buffered Input
-    int 41h
+    int 21h
     return
 
 
@@ -229,7 +229,7 @@ printcrlf:
     lea rdx, crlf
 print:
     mov eax, 0900h
-    int 41h
+    int 21h
     return
 
 printPrompt:
@@ -242,13 +242,13 @@ printPrompt:
 
 printVersion:
     mov ah, 30h ;Get version numbers, al = Major, ah = Minor
-    int 41h
+    int 21h
     push rax
     movzx eax, al
     call printDecimalWordAtCursor
     mov dl, "."
     mov ah, 02h
-    int 41h
+    int 21h
     pop rax
     movzx eax, ah
     call printDecimalWordAtCursor
@@ -435,7 +435,7 @@ printDecimalWordAtCursor:
     shr rcx, 8    ;Get next digit down
 .dpfb21:
     mov ah, 02h
-    int 41h
+    int 21h
     dec ebp
     jnz .dpfb2
     return

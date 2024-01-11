@@ -5,15 +5,15 @@ startFdisk:
 .cVersion:
     cld
     xor eax, eax
-    int 4Ah
+    int 2Ah
     test eax, eax
     jz notMultitasking
     lea rdx, multiMsg
     mov eax, 0900h
-    int 41h
+    int 21h
 .inLoop:
     mov eax, 0800h  ;Console input no echo
-    int 41h
+    int 21h
     cmp al, CR
     je notMultitasking
     cmp al, ESC 
@@ -22,7 +22,7 @@ startFdisk:
 notMultitasking:
 ;Check Version Number
     mov ah, 30h
-    int 41h
+    int 21h
     cmp al, byte [startFdisk.vNum] ;Version 1
     jbe .okVersion
     lea rdx, badVerStr
@@ -36,8 +36,8 @@ notMultitasking:
 .nonZeroDisks:
 ;Set CtrlC hook
     lea rdx, exit.ctrlCHandler
-    mov eax, 2543h
-    int 41h
+    mov eax, 2523h
+    int 21h
 ;Print Start message
     lea rdx, strtMsg
     call print
@@ -47,7 +47,7 @@ notMultitasking:
     ;Allocate 512 bytes now
     mov eax, 4800h
     mov ebx, fddSectorSize >> 4 
-    int 41h
+    int 21h
     jc badMemoryExit
     mov qword [xferBuffer], rax
 
@@ -497,22 +497,22 @@ selectDiskMain:
 
 exit:
 ;In this case exit is done by ways of triple fault
-;To do this, we hook int43h to prevent the user from stopping this 
+;To do this, we hook int23h to prevent the user from stopping this 
 ; process and to link it directly to this the triple fault
     test byte [reboot], -1
     jnz .reboot
     call freeResources
     mov eax, 4C00h
-    int 41h
+    int 21h
 .reboot:
     lea rdx, exitMsg
     mov eax, 0900h
-    int 41h
+    int 21h
     lea rdx, .badInstruction
-    mov eax, 2543h
-    int 41h
+    mov eax, 2523h
+    int 21h
     mov eax, 0800h  ;Input no echo
-    int 41h
+    int 21h
 .badInstruction:
     lidt [.resetIDT] ;Triple fault the machine
     jmp short .toHell
@@ -543,14 +543,14 @@ badSectorExit:
     lea rdx, badSectorMsg
 badPrint:
     mov ah, 09h
-    int 41h
+    int 21h
 badExit:
 ;If we need to reboot, reboot even after an error.
     test byte [reboot], -1
     jnz exit.reboot
     call freeResources
     mov eax, 4CFFh  ;Exit bad
-    int 41h
+    int 21h
 
 freeResources:
 ;Any memory taken from DOS, free it here
@@ -560,7 +560,7 @@ freeResources:
     push r8
     mov r8, qword [xferBuffer]
     mov eax, 4900h
-    int 41h
+    int 21h
     pop r8
     pop rax
     return
