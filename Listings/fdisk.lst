@@ -2317,12 +2317,12 @@
     13 00000DB8 7273696F6E2024      <1>
     14                              <1> 
     15                              <1> cpyrtMsg:
-    16 00000DBF 0A0D28432920436F70- <1>     db LF,CR,"(C) Copyright Scientific Computer Research. 2022", LF,CR,"$"
+    16 00000DBF 0A0D28432920436F70- <1>     db LF,CR,"(C) Copyright Scientific Computer Research. 2024", LF,CR,"$"
     16 00000DC8 797269676874205363- <1>
     16 00000DD1 69656E746966696320- <1>
     16 00000DDA 436F6D707574657220- <1>
     16 00000DE3 52657365617263682E- <1>
-    16 00000DEC 20323032320A0D24    <1>
+    16 00000DEC 20323032340A0D24    <1>
     17                              <1> 
     18                              <1> exitMsg:
     19 00000DF4 0D0A0A              <1>     db CR,LF,LF

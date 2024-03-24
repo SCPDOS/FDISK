@@ -13,7 +13,7 @@ strtMsg:
     db "Fixed Disk Setup Program Version $"
 
 cpyrtMsg:
-    db LF,CR,"(C) Copyright Scientific Computer Research. 2022", LF,CR,"$"
+    db LF,CR,"(C) Copyright Scientific Computer Research. 2024", LF,CR,"$"
 
 exitMsg:
     db CR,LF,LF
