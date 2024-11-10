@@ -2,11 +2,12 @@
 
 crlf    db LF,CR,"$"
 ;This message is only printed if a multitasker is detected as installed
-multiMsg:   
-    db "Please stop all other programs and/or any networking software",
-    db " before proceeding.",LF,CR
+multiMsg:
+    db CR,LF,"!!!WARNING!!!",CR,LF,LF
+    db "Please stop all other programs and/or",CR,LF
+    db "any networking software before proceeding.",CR,LF,LF
     db "Strike Enter to continue once this is done or ESC to return to",
-    db "DOS",LF,CR,"$"
+    db " DOS",LF,CR,"$"
 strtMsg:
     db CR,LF
     db "Scientific Control Program / Disk Operating System",LF,CR

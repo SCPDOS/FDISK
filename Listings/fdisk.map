@@ -11,14 +11,14 @@ Output file:  ./Binaries/FDISK.COM
 -- Sections (summary) ---------------------------------------------------------
 
 Vstart            Start             Stop              Length    Class     Name
-               0                 0              1527  00001527  progbits  .text
+               0                 0              153C  0000153C  progbits  .text
 
 -- Sections (detailed) --------------------------------------------------------
 
 ---- Section .text ------------------------------------------------------------
 
 class:     progbits
-length:                1527
+length:                153C
 start:                    0
 align:     not defined
 follows:   not defined
@@ -703,60 +703,60 @@ Real              Virtual           Name
              CC6               CC6  sectorNum
              CCE               CCE  crlf
              CD1               CD1  multiMsg
-             D67               D67  strtMsg
-             DBF               DBF  cpyrtMsg
-             DE4               DE4  exitMsg
-             E47               E47  prompt
-             E52               E52  drvNum
-             E56               E56  exitOptionMsg
-             E69               E69  selectValidOption
-             EE2               EE2  mainPageMsg
-             F79               F79  mpOptionalMsg
-             F98               F98  createPageBadMsg
-             FBF               FBF  createPageMsg
-             FD6               FD6  createPageMsgPrompt
-            1010              1010  createPage2Msg
-            1078              1078  createPromptMsg
-            109B              109B  createDoneMsg
-            10BA              10BA  createForeignBad
-            10E1              10E1  activeSinglePtnMsg
-            10ED              10ED  activeSinglePtnMsg.number
-            1103              1103  activePromptMsg
-            1139              1139  activePartitionSetMsg
-            1145              1145  activePartitionSetMsg.number
-            1158              1158  deleteNukeMsg
-            1182              1182  deleteNukeCompleteMsg
-            119F              119F  deleteSelectMsg
-            11CD              11CD  deleteCannotMsg
-            11F3              11F3  deleteBadFoundMsg
-            1215              1215  deleteOkMsg
-            1221              1221  deleteOkMsg.number
-            122D              122D  selectNumber
-            1242              1242  selectNumber.number
-            1258              1258  selectPrompt
-            1278              1278  selectPrompt.number
-            127D              127D  partTitle
-            12E4              12E4  partString
-            12E8              12E8  partString.ptnNum
-            12F1              12F1  partString.ptnSts
-            12F5              12F5  partString.ptnFS
-            12FB              12FB  partString.ptnStart
-            1304              1304  partString.ptnEnd
-            130D              130D  partString.ptnSize
-            1318              1318  totalSpaceMsg
-            136E              136E  totalSpaceMsg.sizeCount
-            139D              139D  totalSpaceMsg.sectorCount
-            13DD              13DD  fat12String
-            13E2              13E2  fat16String
-            13E7              13E7  fat32String
-            13EC              13EC  badVerStr
-            1404              1404  noDisks
-            141D              141D  noMemoryMsg
-            1440              1440  invalidMBRMsg
-            1492              1492  badSectorMsg
-            14AF              14AF  badReadMsg
-            14CC              14CC  badWriteMsg
-            14E9              14E9  partialVBR
-            14E9              14E9  ..@108.strucstart
-            1527              1527  freshMBRcopy
+             D7C               D7C  strtMsg
+             DD4               DD4  cpyrtMsg
+             DF9               DF9  exitMsg
+             E5C               E5C  prompt
+             E67               E67  drvNum
+             E6B               E6B  exitOptionMsg
+             E7E               E7E  selectValidOption
+             EF7               EF7  mainPageMsg
+             F8E               F8E  mpOptionalMsg
+             FAD               FAD  createPageBadMsg
+             FD4               FD4  createPageMsg
+             FEB               FEB  createPageMsgPrompt
+            1025              1025  createPage2Msg
+            108D              108D  createPromptMsg
+            10B0              10B0  createDoneMsg
+            10CF              10CF  createForeignBad
+            10F6              10F6  activeSinglePtnMsg
+            1102              1102  activeSinglePtnMsg.number
+            1118              1118  activePromptMsg
+            114E              114E  activePartitionSetMsg
+            115A              115A  activePartitionSetMsg.number
+            116D              116D  deleteNukeMsg
+            1197              1197  deleteNukeCompleteMsg
+            11B4              11B4  deleteSelectMsg
+            11E2              11E2  deleteCannotMsg
+            1208              1208  deleteBadFoundMsg
+            122A              122A  deleteOkMsg
+            1236              1236  deleteOkMsg.number
+            1242              1242  selectNumber
+            1257              1257  selectNumber.number
+            126D              126D  selectPrompt
+            128D              128D  selectPrompt.number
+            1292              1292  partTitle
+            12F9              12F9  partString
+            12FD              12FD  partString.ptnNum
+            1306              1306  partString.ptnSts
+            130A              130A  partString.ptnFS
+            1310              1310  partString.ptnStart
+            1319              1319  partString.ptnEnd
+            1322              1322  partString.ptnSize
+            132D              132D  totalSpaceMsg
+            1383              1383  totalSpaceMsg.sizeCount
+            13B2              13B2  totalSpaceMsg.sectorCount
+            13F2              13F2  fat12String
+            13F7              13F7  fat16String
+            13FC              13FC  fat32String
+            1401              1401  badVerStr
+            1419              1419  noDisks
+            1432              1432  noMemoryMsg
+            1455              1455  invalidMBRMsg
+            14A7              14A7  badSectorMsg
+            14C4              14C4  badReadMsg
+            14E1              14E1  badWriteMsg
+            14FE              14FE  partialVBR
+            14FE              14FE  ..@108.strucstart
+            153C              153C  freshMBRcopy
 
