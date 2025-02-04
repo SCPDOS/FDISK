@@ -39,22 +39,22 @@ fddSectorSize   equ 200h
 ;All uninitialised values are set to 0
 ;If total sectors is bigger than 16 bits, set totSec16 to 0
 ;Else set totSec32 to 0
-partialVBR:
-    istruc bpb
-    at bpb.jmpBoot,     db 0EBh, 00h, 90h   ;Needed start signtature
-    at bpb.oemName,     db 'SCPDOSv1'
-    at bpb.bytsPerSec,  dw 0200h        ;512 bytes per sector always
-    at bpb.secPerClus,  db 0            ;Unset by FDISK
-    at bpb.revdSecCnt,  dw 0            ;Unset by FDISK
-    at bpb.numFATs,     db 1            ;Unset by FDISK, set to 1
-    at bpb.rootEntCnt,  dw 0            ;Unset by FDISK
-    at bpb.totSec16,    dw -1           ;Total number of sectors on disk
-    at bpb.media,       db 0F8h         ;Hard Disk Media byte
-    at bpb.FATsz16,     dw 0            ;Unset by FDISK
-    at bpb.secPerTrk,   dw 003Fh        ;Fake Hard disk geometry 64 sec/trk
-    at bpb.numHeads,    dw 00FFh        ;255 Heads
-    at bpb.hiddSec,     dd -1           ;Set this field
-    at bpb.totSec32,    dd -1           ;Set total sec if bigger than 16 bits 
-    iend
-partialVBRL equ $ - partialVBR
+;partialVBR:
+;    istruc bpb
+;    at bpb.jmpBoot,     db 0EBh, 00h, 90h   ;Needed start signtature
+;    at bpb.oemName,     db 'SCPDOSv1'
+;    at bpb.bytsPerSec,  dw 0200h        ;512 bytes per sector always
+;    at bpb.secPerClus,  db 0            ;Unset by FDISK
+;    at bpb.revdSecCnt,  dw 0            ;Unset by FDISK
+;    at bpb.numFATs,     db 1            ;Unset by FDISK, set to 1
+;    at bpb.rootEntCnt,  dw 0            ;Unset by FDISK
+;    at bpb.totSec16,    dw -1           ;Total number of sectors on disk
+;    at bpb.media,       db 0F8h         ;Hard Disk Media byte
+;    at bpb.FATsz16,     dw 0            ;Unset by FDISK
+;    at bpb.secPerTrk,   dw 003Fh        ;Fake Hard disk geometry 64 sec/trk
+;    at bpb.numHeads,    dw 00FFh        ;255 Heads
+;    at bpb.hiddSec,     dd -1           ;Set this field
+;    at bpb.totSec32,    dd -1           ;Set total sec if bigger than 16 bits 
+;    iend
+;partialVBRL equ $ - partialVBR
 freshMBRcopy:   ;Symbol pointing to the MBR copy appended

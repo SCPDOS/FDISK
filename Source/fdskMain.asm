@@ -230,35 +230,35 @@ createPtnMain:
     jc badWriteExit
     ;Now setup the partial VBR to the first sector of the partition
     ;Start by sanitising the Buffer
-    mov rdi, qword [xferBuffer]
-    xor eax, eax
-    mov ecx, 200h/8
-    push rdi
-    rep stosq
-    pop rdi
-    lea rsi, partialVBR
-    mov ecx, partialVBRL
-    rep movsb
-    ;xferBuffer has the partial vbr in it now
-    ;rbx points to it
-    mov eax, dword [ptnStart]
-    mov dword [rbx + bpb.hiddSec], eax
-    mov eax, dword [ptnSize]
-    test eax, 0FFFF0000h ;Check for high bits
-    jnz .fat32Var
-    mov word [rbx + bpb.totSec16], ax
-    mov dword [rbx + bpb.totSec32], 0
-    jmp short .writeVBR
-.fat32Var:
-    mov word [rbx + bpb.totSec16], 0
-    mov dword [rbx + bpb.totSec32], eax
-.writeVBR:
-    mov edx, dword [ptnStart]
-    call sectorWrite
-    jc badWriteExit
+;    mov rdi, qword [xferBuffer]
+;    xor eax, eax
+;    mov ecx, 200h/8
+;    push rdi
+;    rep stosq
+;    pop rdi
+;    lea rsi, partialVBR
+;    mov ecx, partialVBRL
+;    rep movsb
+;    ;xferBuffer has the partial vbr in it now
+;    ;rbx points to it
+;    mov eax, dword [ptnStart]
+;    mov dword [rbx + bpb.hiddSec], eax
+;    mov eax, dword [ptnSize]
+;    test eax, 0FFFF0000h ;Check for high bits
+;    jnz .fat32Var
+;    mov word [rbx + bpb.totSec16], ax
+;    mov dword [rbx + bpb.totSec32], 0
+;    jmp short .writeVBR
+;.fat32Var:
+;    mov word [rbx + bpb.totSec16], 0
+;    mov dword [rbx + bpb.totSec32], eax
+;.writeVBR:
+;    mov edx, dword [ptnStart]
+;    call sectorWrite
+;    jc badWriteExit
 
-    lea rdx, createDoneMsg
-    call print
+;    lea rdx, createDoneMsg
+;    call print
     jmp mainLoop
 
 changeActivePtnMain:
